@@ -13,6 +13,7 @@ from telegram.ext import (
 from config import BOT_TOKEN, ADMIN_ID
 from properties import properties
 from excel import save_to_excel
+from database import create_database, save_to_database
 from keyboards import main_menu, property_keyboard
 
 user_state = {}
@@ -156,6 +157,8 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=ADMIN_ID, text=admin_text)
         save_to_excel(data)
 
+        save_to_database(data)
+
         await update.message.reply_text("✅ Спасибо! Заявка отправлена агенту.")
         return
 
@@ -163,6 +166,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
+    create_database()
     app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
