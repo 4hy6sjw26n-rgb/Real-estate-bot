@@ -161,8 +161,46 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text("✅ Спасибо! Заявка отправлена агенту.")
         return
+   
+async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    
+    user_id = update.effective_user.id
 
-    await update.message.reply_text("Используйте кнопки меню 👇")
+    if user_id != ADMIN_ID:
+        await update.message.reply_text("⛔ У вас нет доступа к этой команде.")
+        return
+
+    requests = get_last_requests(10)
+
+    if not requests:
+        await update.message.reply_text("📭 В базе пока нет заявок.")
+        return
+
+    text_parts = ["📋 Последние заявки:\n\n"]
+
+    for row in requests:
+        (
+            request_id,
+            created_at,
+            request_type,
+            name,
+            phone,
+            description,
+            property_title,
+        ) = row
+
+        text_parts.append(
+            f"№ {request_id}\n"
+            f"🕒 {created_at}\n"
+            f"Тип: {request_type or 'Не указан'}\n"
+            f"Объект: {property_title or 'Не указан'}\n"
+            f"Имя: {name or 'Не указано'}\n"
+            f"Телефон: {phone or 'Не указан'}\n"
+            f"Комментарий: {description or 'Нет'}\n"
+            f"{'—' * 20}\n"
+        )
+
+    await update.message.reply_text("".join(text_parts))
 
 
 def main():
@@ -170,6 +208,7 @@ def main():
     app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("admin", admin))
     app.add_handler(CallbackQueryHandler(button))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message))
 
