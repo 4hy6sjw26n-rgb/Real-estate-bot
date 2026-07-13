@@ -20,5 +20,3 @@ requests.db
 requests.xlsx
 __pycache__/
 *.pyc
-
-requests.db
