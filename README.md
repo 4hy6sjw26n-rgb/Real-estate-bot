@@ -26,3 +26,25 @@ python3 bot.py
 ## Автор
 
 Александр
+
+## Скриншоты
+
+### Главное меню
+
+![Главное меню](screenshots/main-menu.jpeg)
+
+### Карточка объекта
+
+![Карточка объекта](screenshots/property-card.jpeg)
+
+### Оформление заявки
+
+![Форма заявки](screenshots/request-form.jpeg)
+
+### Сообщение администратору
+
+![Сообщение администратору](screenshots/admin-message.jpeg)
+
+### Excel с заявками
+
+![Excel](screenshots/excel-requests.jpeg)
