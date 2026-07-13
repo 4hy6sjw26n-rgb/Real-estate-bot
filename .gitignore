@@ -13,3 +13,5 @@ requests.xlsx
 
 # Настройки VS Code
 .vscode/
+
+config.py
