@@ -13,7 +13,7 @@ from telegram.ext import (
 from config import BOT_TOKEN, ADMIN_ID
 from properties import properties
 from excel import save_to_excel
-from database import create_database, save_to_database
+from database import create_database, save_to_database, get_last_requests
 from keyboards import main_menu, property_keyboard
 
 user_state = {}

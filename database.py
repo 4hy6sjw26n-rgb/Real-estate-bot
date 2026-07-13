@@ -54,3 +54,29 @@ def save_to_database(data):
 
     connection.commit()
     connection.close()
+
+def get_last_requests(limit=10):
+    connection = sqlite3.connect(DB_NAME)
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            id,
+            created_at,
+            type,
+            name,
+            phone,
+            description,
+            property
+        FROM requests
+        ORDER BY id DESC
+        LIMIT ?
+        """,
+        (limit,),
+    )
+
+    rows = cursor.fetchall()
+    connection.close()
+
+    return rows
